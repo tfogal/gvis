@@ -1,0 +1,6 @@
+SRC:=\
+  ./crop.cpp \
+  ./driver.cpp \
+  ./png.c \
+  ./bstream.c \
+  ./filter.cpp

@@ -1,0 +1,4 @@
+* bstream_t's dimensions should be a std::array to make assigning easy
+* have execute() return output(0), that makes it much more convenient
+* 'type' is duplicated in both cast and crop, should be in one place.
+* can we throw better errors than runtime_error for bad input in execute()?

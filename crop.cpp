@@ -50,7 +50,7 @@ work(const T* din, const size_t idims[4], const size_t dims[4],
   }
   stream rv;
 
-  std::shared_ptr<T> dout(new T[dims[0]*dims[1]*dims[2]*dims[3] * sizeof(T)],
+  std::shared_ptr<T> dout(new T[dims[0]*dims[1]*dims[2]*dims[3]],
                           nonstd::DeleteArray<T>());
   for(size_t t=0; t < dims[3]; ++t) {
     for(size_t z=0; z < dims[2]; ++z) {
@@ -101,7 +101,7 @@ void Crop::execute() {
   /* ... except one of our axes is now shorter. */
   dims[this->ci->axis] = this->ci->index;
 
-  if(info.channels == 1) {
+  if(info.channels != 1) {
     throw std::runtime_error("bug: it should, but right now crop doesn't "
                              "handle multi-channel data.");
   }
@@ -140,6 +140,7 @@ void Crop::execute() {
   } else {
     throw std::runtime_error("unknown type.");
   }
+  this->set_output(0, outs);
 }
 
 }

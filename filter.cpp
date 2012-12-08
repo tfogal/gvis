@@ -48,6 +48,14 @@ void Filter::set_input(std::shared_ptr<void> data, bstream_t ddescriptor) {
   this->fi->itype.push_back(ddescriptor);
   assert(this->fi->invariant());
 }
+void Filter::set_input(stream strm) {
+  assert(this->fi->invariant());
+  this->fi->inputs.clear();
+  this->fi->itype.clear();
+  this->fi->inputs.push_back(strm.data);
+  this->fi->itype.push_back(strm.info);
+  assert(this->fi->invariant());
+}
 stream Filter::input(size_t i) {
   assert(this->fi->invariant());
   if(i > this->fi->inputs.size()) {
@@ -71,6 +79,21 @@ const cstream Filter::input(size_t i) const {
   return rv;
 }
 
+void Filter::set_output(size_t i, std::shared_ptr<void> d, bstream_t sinfo) {
+  if(this->fi->outputs.size() < (i+1)) {
+    this->fi->outputs.resize(i+1);
+  }
+  if(this->fi->otype.size() < (i+1)) {
+    this->fi->otype.resize(i+1);
+  }
+  this->fi->outputs[i] = d;
+  this->fi->otype[i] = sinfo;
+}
+
+void Filter::set_output(size_t i, stream strm) {
+  this->set_output(i, strm.data, strm.info);
+}
+
 stream Filter::output(size_t i) {
   assert(this->fi->invariant());
   if(i > this->fi->outputs.size()) {
@@ -82,7 +105,6 @@ stream Filter::output(size_t i) {
   rv.info = this->fi->otype[i];
   return rv;
 }
-
 const cstream Filter::output(size_t i) const {
   assert(this->fi->invariant());
   if(i > this->fi->outputs.size()) {

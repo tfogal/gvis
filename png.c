@@ -45,7 +45,6 @@ bool writepng(const char* filename, const uint16_t* buf,
                PNG_FILTER_TYPE_BASE);
   png_write_info(png, info);
 
-  png_set_swap(png);
   for(uint32_t y=0; y < height; ++y) {
     png_write_row(png, (png_bytep) (buf + y*width));
   }

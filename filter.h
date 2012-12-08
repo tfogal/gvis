@@ -31,6 +31,7 @@ class Filter {
     /// convenience function so one doesn't have to build a bunch of data
     /// structures.
     void set_input(std::shared_ptr<void> data, bstream_t);
+    void set_input(stream strm);
 
     stream output(size_t i);
     const cstream output(size_t i) const;
@@ -43,6 +44,7 @@ class Filter {
     const cstream input(size_t i) const;
 
     void set_output(size_t i, std::shared_ptr<void>, bstream_t);
+    void set_output(size_t i, stream);
 
   private:
     std::unique_ptr<struct finfo> fi;

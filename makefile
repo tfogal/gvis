@@ -11,8 +11,8 @@ OBJ:=$(OBJ:.c=.o)
 
 all: $(OBJ) test
 
-test: bstream.o crop.o driver.o filter.o png.o
+test: bstream.o cast.o crop.o driver.o filter.o png.o
 	$(CXX) $^ -o $@ $(LIBS)
 
 clean:
-	rm -f $(OBJ)
+	rm -f $(OBJ) test

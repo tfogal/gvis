@@ -3,5 +3,6 @@ SRC:=\
   ./driver.cpp \
   ./png.c \
   ./bstream.c \
+  ./minmax.cpp \
   ./cast.cpp \
   ./filter.cpp

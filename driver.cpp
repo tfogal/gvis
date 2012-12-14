@@ -2,8 +2,11 @@
 #include <cassert>
 #include <cstdint>
 #include <cstdlib>
+#include <iostream>
 #include "cast.h"
 #include "crop.h"
+#include "minmax.h"
+#include "nonstd.h"
 #include "gv-png.h"
 
 int main() {
@@ -42,6 +45,23 @@ int main() {
   assert(((const uint16_t*)upcasted.data.get())[0] == 27);
 
   writepng("test.png", (const uint16_t*)upcasted.data.get(), width, height);
+  }
+
+  {
+    gv::MinMax mm;
+    std::array<double, 12> arr = {{ 9,11,16,42, 19,8,-2,4, -19,86,14,8 }};
+    bstream_t arri = {
+      FLOAT,
+      sizeof(double),
+      1,
+      { 12, 1, 1, 1 }
+    };
+    mm.set_input(std::shared_ptr<void>(arr.data(), nonstd::null_deleter()),
+                 arri);
+    mm.execute();
+    gv::stream mmax = mm.output(0);
+    const double* dat = static_cast<const double*>(mmax.data.get());
+    std::cout << "minmax: (" << dat[0] << ")--(" << dat[1] << ")\n";
   }
   return EXIT_SUCCESS;
 }

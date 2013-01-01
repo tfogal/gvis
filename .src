@@ -1,4 +1,5 @@
 SRC:=\
+  ./marching-squares.cpp \
   ./crop.cpp \
   ./driver.cpp \
   ./png.c \
